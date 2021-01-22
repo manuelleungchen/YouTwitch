@@ -1,16 +1,25 @@
-<h2>Sign Up Form</h2>
 
-<form class="signup">
+<link rel="stylesheet" href="css/signUp.css">
+<div class="container col s6">
+    <h3>Sign Up Form</h3>
+    <form class="signup">
     <div class="input-field col s6">
-        <label for="email-input">Email address</label>
+        <i class="tiny material-icons">email</i>
         <input type="email" class="" id="email-input" placeholder="Email">
     </div>
     <div class="input-field col s6">
-        <label for="password-input">Password</label>
+        <i class="tiny material-icons">lock</i>
         <input type="password" class="" id="password-input" placeholder="Password">
     </div>
-    <button type="submit" class="">Sign Up</button>
-</form>
+    <div class="row">
+        <button type="submit" class="col s2 waves-effect waves-light btn">Sign Up</button>
+        <div>
+        <p class="col s3 push s1 text">or log in <a href="/login">here</a></p>
+
+        </div>
+    </div>
+    </form>
+</div>
+
 
 <br />
-<p>Or log in <a href="/login">here</a></p>
