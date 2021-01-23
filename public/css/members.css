@@ -1,0 +1,49 @@
+#nav {
+    /* background-color: lightskyblue; */
+}
+
+
+img {
+    width: 50px;
+}
+
+#logo {
+    display: flex;
+    align-items: center;
+}
+
+#searchBarDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 5px;
+}
+
+#searchBarDiv input {
+    padding-left: 10px;
+    border-radius: 5px;
+}
+
+#searchBarDiv button {
+    border-radius: 5px;
+    border: none;
+}
+
+#videoDiv {
+    width: 200px;
+    height: 200px;
+    background-color: gray;
+    text-align: center;
+    padding: 40px;
+    margin: 10px;
+}
+
+
+/* Sets portrait size and paddings for Screen below 992 pixels  */
+/* @media screen and (max-width: 992px) {
+    #logo span{
+        display: flex;
+        align-content: center;
+        color: blue;
+    }
+} */
