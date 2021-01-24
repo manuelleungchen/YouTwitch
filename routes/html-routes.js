@@ -28,7 +28,29 @@ module.exports = function(app) {
   // If a user who is not logged in tries to access this route they will be redirected to the signup page
   app.get("/members", isAuthenticated, function(req, res) {
       
+    res.render('search');
     // res.sendFile(path.join(__dirname, "../public/members.html"));
   });
+
+  app.get('/members/:query', isAuthenticated, (req,res)=> {
+    const data = [];
+        searcher.search(req.params.query, {
+            eventType: 'live',
+            type: 'video'
+        }).then(result => {
+            result.currentPage.forEach(result => {
+                data.push({
+                    url: result.url,
+                    id: result.id,
+                    title: result.title,
+                    thumbnails: result.thumbnails.medium.url
+                });
+            });
+            console.log(data);
+            res.render('members', {
+                link: data
+            });
+        });        
+});
 
 };
