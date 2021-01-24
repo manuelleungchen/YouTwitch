@@ -36,7 +36,8 @@
     "mysql2": "^2.2.5",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
-    "sequelize": "^5.8.6"
+    "sequelize": "^5.8.6",
+    "ytsearcher": "^1.2.3"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
