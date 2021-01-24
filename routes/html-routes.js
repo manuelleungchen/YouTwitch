@@ -47,7 +47,7 @@ module.exports = function(app) {
                 });
             });
             console.log(data);
-            res.render('members', {
+            res.render('search_results', {
                 link: data
             });
         });        
