@@ -3,7 +3,6 @@ const createInputEmailEl = document.querySelector("#email-input");
 const createInputPasswordEl = document.querySelector("#password-input");
 
 createformEl.addEventListener('submit', (e)=> {
-    console.log('hello');
     e.preventDefault();
     const newUser = {
         email: createInputEmailEl.value.trim(),
