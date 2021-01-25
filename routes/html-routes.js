@@ -46,7 +46,16 @@ module.exports = function(app) {
                     thumbnails: result.thumbnails.medium.url
                 });
             });
-            console.log(data);
+            //This function will shuffle the data
+            function shuffle(a) {
+                for (let i = a.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [a[i], a[j]] = [a[j], a[i]];
+                }
+                return a;
+            }
+            shuffle(data);
+
             res.render('search_results', {
                 link: data
             });
