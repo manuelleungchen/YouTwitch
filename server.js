@@ -12,6 +12,11 @@ const passport = require("./config/passport");
 const PORT = process.env.PORT || 8080;
 const db = require("./models");
 
+//Setting the youtube searcher library
+const {YTSearcher} = require('ytsearcher');
+const API_KEY = process.env.API_KEY;
+const searcher = new YTSearcher(API_KEY);
+
 // Creating express app and configuring middleware needed for authentication
 const app = express();
 app.use(express.urlencoded({ extended: true }));
