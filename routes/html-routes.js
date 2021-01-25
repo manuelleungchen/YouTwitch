@@ -4,6 +4,13 @@ var path = require("path");
 // Requiring our custom middleware for checking if a user is logged in
 var isAuthenticated = require("../config/middleware/isAuthenticated");
 
+//Parameters required to use the ytsearcher npm libraryry
+require('dotenv').config();
+const {YTSearcher} = require('ytsearcher');
+const API_KEY = process.env.API_KEY;
+const searcher = new YTSearcher(API_KEY);
+
+
 module.exports = function(app) {
 
   app.get("/", function(req, res) {
@@ -34,6 +41,7 @@ module.exports = function(app) {
 
   app.get('/members/:query', isAuthenticated, (req,res)=> {
     const data = [];
+
         searcher.search(req.params.query, {
             eventType: 'live',
             type: 'video'
@@ -59,7 +67,7 @@ module.exports = function(app) {
             res.render('search_results', {
                 link: data
             });
-        });        
+        }).catch(err=>console.log(err));        
 });
 
 };

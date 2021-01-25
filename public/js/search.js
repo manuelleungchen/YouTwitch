@@ -10,5 +10,5 @@ searchFormEl.addEventListener('submit', (e)=> {
         return;
     }
 
-    window.location.replace(`/members/${searchVideoEl.value.trim()}`);
+    window.location.replace(`/members/${videoInfo.query}`);
 })

@@ -25,4 +25,4 @@ createformEl.addEventListener('submit', (e)=> {
         // window.location.replace('/members');
         console.log(newUser)
     })
-})
+});
