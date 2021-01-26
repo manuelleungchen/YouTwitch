@@ -1,0 +1,30 @@
+<nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">Youtwitch</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><input id="searchVideo" type="text" class="validate" placeholder="Search"></li>
+        <li><a href="badges.html">Logout</a></li>
+      </ul>
+    </div>
+</nav>
+<article>
+    {{#if link}}
+    {{#each link}}
+    <!-- Modal Trigger -->
+    <a href='#{{@index}}' class="waves-effect waves-light modal-trigger"><img src="{{this.thumbnails}}"></a>
+   
+
+  <!-- Modal Structure -->
+  <div id="{{@index}}" class="modal">
+    <div class="modal-content">
+        <h5>{{this.title}}</h3>
+      <iframe width='500' height='380'src='https://www.youtube.com/embed/{{this.id}}' title='youtubevideo'></iframe>
+    </div>
+    <div class="modal-footer">
+      <a href="{{this.url}}" class="modal-close waves-effect waves-green btn-flat" target="_blank">Open on youtube</a>
+    </div>
+  </div>
+    {{/each}}
+  {{/if}}
+</article>
+<script src='/js/members.js'></script>
