@@ -47,31 +47,26 @@ img {
     /* color: black; */
 }
 
-#darkmodeOFF {
-    /* body */
-    background-color: #f5f5f5;
-    /* Side Menu Background Color */
-    background-color: #bbdefb;
-
-    /* Search white dark-text*/
-    /* button material-icons darken-3-text */
-
-    /* logo span black */
-    /* sidenav-trigger  i black-text  */
-
-    /* switch label black-text */
+.darkModeOFF {
+    /* Font Color */
+    color: #212121;
+    /* Background Color */
+    background-color: #fafafa;
 }
 
 
-#darkmodeON {
-    /* body */
-    background-color: #f5f5f5;
-    /* Side Menu Background Color */
-    background-color: #90caf9;
-
-    /* Search grey darken-3 */
-    /* button material-icons darken-3-text */
+.darkModeON {
+    /* Font Color */
+    color: #fafafa;
+    /* Background Color */
+    background-color: black;
 }
+
+.card-content {
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+  }
 
 
 /* Sets portrait size and paddings for Screen below 992 pixels  */
