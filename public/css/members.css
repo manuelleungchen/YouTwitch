@@ -61,10 +61,8 @@ img {
     background-color: black;
 }
 
-.card-content {
-    white-space: nowrap; 
-    overflow: hidden;
-    text-overflow: ellipsis; 
+.cardtext{
+    padding: 0;
 }
 
 @media screen and (max-width: 400px) {

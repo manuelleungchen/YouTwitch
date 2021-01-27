@@ -86,7 +86,7 @@ module.exports = function(app) {
                         id: result.id,
                         title: result.title,
                         thumbnails: result.thumbnails.medium.url,
-                        frameSrc: `https://www.youtube.com/embed/${result.id}?autoplay=1`
+                        frameSrc: `https://www.youtube.com/embed/${result.id}?autoplay=0`
                     });
                 });
                 res.render('members', { link: videosData });

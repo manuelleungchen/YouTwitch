@@ -69,8 +69,24 @@ $(document).ready(function () {
         $(".member-name").text(data.email);
     });
 
+    const iframe = document.querySelectorAll('.iframe');
+    // $('.iframe').each(()=>{
+    //     $('this').pause();
+    // })
+    console.log(iframe);
+    // const iframe = $('.iframe')
+    $(".modal").on('hidden.bs.modal', function (e) {
+        $(".modal iframe").attr("src", $(".modal iframe").attr("src"));
+    });
+
     $('.modal').modal({
-        opacity: 1
+        opacity: 1,
+        onCloseEnd: ()=> {
+            iframe.forEach(video=>{
+                console.log(video.getAttribute('src'));
+                video.setAttribute('src', video.getAttribute('src'));
+            })
+        }
     });
 
 })
