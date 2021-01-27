@@ -92,34 +92,4 @@ $(document).ready(function () {
             })
         }
     });
-
-    const addBtnEl = document.querySelectorAll('.addBtn');
-    addBtnEl.forEach((button)=> {
-        button.addEventListener("click", ()=> {
-            const siblingEl = button.previousElementSibling.getAttribute('href');
-            const imageElSrc = button.previousElementSibling.children[0].getAttribute('src');
-            const titleEl = button.parentElement.parentElement.children[2].children[0].innerHTML.toString();
-            console.log(titleEl);
-            const siblingElInt = siblingEl.replace(/^\D+/g, '');
-            const id = document.getElementById(siblingElInt);
-            const iframeElSrc = id.childNodes[1].children[0].getAttribute('src');
-            const memberNameEl = document.querySelector('.member-name');
-            const savedVideoInfo = {
-                email: memberNameEl.innerHTML,
-                video: iframeElSrc,
-                thumbnail: imageElSrc,
-                title: titleEl
-            }
-            console.log(savedVideoInfo)
-            fetch('/api/saved', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'Application/json'
-                },
-                body: JSON.stringify(savedVideoInfo)
-            }).then(()=> {
-                console.log('Adding to the database');
-            }).catch(err => console.log(err));
-        });
-    })
 })

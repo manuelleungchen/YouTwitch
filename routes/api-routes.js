@@ -51,4 +51,24 @@ module.exports = function(app) {
       });
     }
   });
+  
+  //Route to save user videos
+  app.post("/api/saved", (req,res)=> {
+    db.User.findOne({
+      where: {
+        email: req.body.email
+      }
+    }).then((result) => {
+      // console.log(result.dataValues.id);
+      db.saved.create({
+        UserId: result.dataValues.id,
+        videos: req.body.video,
+        thumbnail: req.body.thumbnail,
+        title: req.body.title
+      }).then(()=> {
+        console.log('Added to the database');
+      }).catch(err=>console.log(err));
+    }).catch(err=>console.log(err));
+  });
+ 
 };
