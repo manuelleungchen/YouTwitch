@@ -69,6 +69,8 @@ $(document).ready(function () {
         $(".member-name").text(data.email);
     });
 
-    $('.modal').modal();
+    $('.modal').modal({
+        opacity: 1
+    });
 
 })
