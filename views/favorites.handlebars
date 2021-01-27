@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="./css/members.css">
+<link rel="stylesheet" href="/css/members.css">
 
 <header>
 
@@ -7,9 +7,9 @@
             <a href="#" class="sidenav-trigger hide-on-large-only left" data-target="nav-mobile">
                 <i class="material-icons black-text">menu</i>
             </a>
-            <a href="#" class="brand-logo">
+            <a href="/members" class="brand-logo">
                 <div id="logo">
-                    <img src="./images/YouTwitch.png" alt="">
+                    <img src="/images/YouTwitch.png" alt="">
                     <span class="black-text">YouTwitch</span>
                 </div>
             </a>
@@ -70,7 +70,7 @@
     <div class="row">
         {{#if link}}
         {{#each link}}
-        {{> videos/video-block}}
+        {{> videos/favorites-block}}
 
 
         <!-- Modal Structure -->
@@ -100,4 +100,4 @@
 {{!-- JQuery --}}
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
-<script src="./js/members.js"></script>
+<script src="/js/favorites.js"></script>
