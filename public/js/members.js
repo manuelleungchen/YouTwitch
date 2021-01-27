@@ -9,8 +9,8 @@ $(document).ready(function () {
             $("body").css("background-color", "#212121");
             $("body").css("color", "white");
             $("#nav-mobile").css("background-color", "#000000");
-            $("#searchBarDiv input").removeClass("white");
-            $("#searchBarDiv input").addClass("black");
+            $("#searchBarDiv input").removeClass("darkModeOFF");
+            $("#searchBarDiv input").addClass("darkModeON");
             $("#searchBarDiv button i").removeClass("grey-darken-3-text");
             $("#searchBarDiv button i").addClass("white-text");
             $("#logo span").removeClass("black-text");
@@ -27,13 +27,18 @@ $(document).ready(function () {
             $("#navLinks li a").addClass("white-text");
             $(".sidenav-trigger i").removeClass("black-text");
             $(".sidenav-trigger i").addClass("white-text");
+            $(".card").removeClass("darkModeOFF");
+            $(".card").addClass("darkModeON");
+            document.querySelector("#navToogle").setAttribute("checked", true);
+            document.querySelector("#sidebarToogle").setAttribute("checked", true);
+
         } else {
             // Dark Mode OFF
             $("body").css("background-color", "#f5f5f5");
             $("body").css("color", "#424242");
             $("#nav-mobile").css("background-color", "#bbdefb");
-            $("#searchBarDiv input").removeClass("black");
-            $("#searchBarDiv input").addClass("white");
+            $("#searchBarDiv input").removeClass("darkModeON");
+            $("#searchBarDiv input").addClass("darkModeOFF");
             $("#searchBarDiv button i").removeClass("white-text");
             $("#searchBarDiv button i").addClass("grey-darken-3-text");
             $("#logo span").removeClass("white-text");
@@ -50,6 +55,10 @@ $(document).ready(function () {
             $("#navLinks li a").addClass("black-text");
             $(".sidenav-trigger i").removeClass("white-text");
             $(".sidenav-trigger i").addClass("black-text");
+            $(".card").removeClass("darkModeON");
+            $(".card").addClass("darkModeOFF");
+            document.querySelector("#navToogle").setAttribute("checked", false);
+            document.querySelector("#sidebarToogle").setAttribute("checked", false);
         }
     });
 
@@ -60,5 +69,6 @@ $(document).ready(function () {
         $(".member-name").text(data.email);
     });
 
+    $('.modal').modal();
 
 })
