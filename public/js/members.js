@@ -71,4 +71,35 @@ $(document).ready(function () {
 
     $('.modal').modal();
 
+    // Fetch Videos when using searchbar.
+
+    const createForm = document.getElementById('create-form');
+
+    createForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Grabs the value of the textarea that goes by the name, "quote"
+        const newSearch = {
+            searchValue: document.getElementById('search').value.trim(),
+        };
+
+        if (!newSearch.searchValue) {
+            return;
+        }
+
+        window.location.replace(`/members/${newSearch.searchValue}`);
+        // Send POST request to create a new quote
+        //   fetch('/api/search', {
+        //     method: 'POST',
+        //     headers: {
+        //       Accept: 'application/json',
+        //       'Content-Type': 'application/json',
+        //     },
+
+        //     // make sure to serialize the JSON body
+        //     body: JSON.stringify(newSearch),
+        //   }).then(() => {
+        //     console.log("Data Fetched");
+        //   }).catch(err=>console.log(err)); 
+    })
 })

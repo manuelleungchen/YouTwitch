@@ -6,7 +6,7 @@ var isAuthenticated = require("../config/middleware/isAuthenticated");
 
 //Parameters required to use the ytsearcher npm libraryry
 require('dotenv').config();
-const {YTSearcher} = require('ytsearcher');
+const { YTSearcher } = require('ytsearcher');
 const API_KEY = process.env.API_KEY;
 const searcher = new YTSearcher(API_KEY);
 
@@ -19,116 +19,162 @@ const twitch = new TwitchApi({
 })
 
 
-module.exports = function(app) {
+module.exports = function (app) {
 
-  app.get("/", function(req, res) {
-    // If the user already has an account send them to the members page
-    if (req.user) {
-      res.redirect("/members");
-    }
-    res.render('signup');
-    // res.sendFile(path.join(__dirname, "../public/signup.html"));
-  });
+    app.get("/", function (req, res) {
+        // If the user already has an account send them to the members page
+        if (req.user) {
+            res.redirect("/members");
+            // res.redirect("/members/videos");
 
-  app.get("/login", function(req, res) {
-    // If the user already has an account send them to the members page
-    if (req.user) {
+        }
+        res.render('signup');
+        // res.sendFile(path.join(__dirname, "../public/signup.html"));
+    });
 
-      res.redirect("/members");
-    }
-    // res.sendFile(path.join(__dirname, "../public/login.html"));
-    res.render('login');
-  });
+    app.get("/login", function (req, res) {
+        // If the user already has an account send them to the members page
+        if (req.user) {
 
-  // Here we've add our isAuthenticated middleware to this route.
-  // If a user who is not logged in tries to access this route they will be redirected to the signup page
-  app.get("/members", isAuthenticated, function(req, res) {
-      
-    const videosData = [];
+            res.redirect("/members");
+            // res.redirect("/members/videos");
 
-    // The a list of tope games
-    twitch.getTopGames().then(topGames => {
-        // Pick a randow index element from topGames
-        const randomIndex = Math.floor(Math.random() * topGames.data.length);
+        }
+        // res.sendFile(path.join(__dirname, "../public/login.html"));
+        res.render('login');
+    });
 
-        // Get videos from selected index
-        twitch.getVideos({
-            game_id: topGames.data[randomIndex].id,
-            first: "3",
-            // type: "highlight"
-        }).then(videosResult => {
+    // Here we've add our isAuthenticated middleware to this route.
+    // If a user who is not logged in tries to access this route they will be redirected to the signup page
+    app.get("/members", isAuthenticated, function (req, res) {
 
-            videosResult.data.forEach(video => {
-                const width = /(%{width})/g;
-                const height = /(%{height})/g;
+        const videosData = [];
 
-                let thumbnails = video.thumbnail_url.replace(width, "320");
-                thumbnails = thumbnails.replace(height, "180");
+        // The a list of top games
+        twitch.getTopGames().then(topGames => {
+            // Pick a randow index element from topGames
+            const randomIndex = Math.floor(Math.random() * topGames.data.length);
 
-                videosData.push({
-                    url: video.url,
-                    id: video.id,
-                    title: video.title,
-                    thumbnails: thumbnails,
-                    frameSrc: `https://player.twitch.tv/?video=${video.id}&parent=localhost&autoplay=false`
-                })
-            })
+            // Get videos from selected index
+            twitch.getVideos({
+                game_id: topGames.data[randomIndex].id,
+                first: "6",  // Limit results to 6
+                sort: "views"
+            }).then(videosResult => {
 
-            // Start the search from Youtube
-            searcher.search(topGames.data[randomIndex].name, {
-                eventType: 'live',
-                type: 'video'
-            }).then(result => {
+                videosResult.data.forEach(video => {
+                    const width = /(%{width})/g;
+                    const height = /(%{height})/g;
 
-                result.currentPage.forEach(result => {
+                    let thumbnails = video.thumbnail_url.replace(width, "320");
+                    thumbnails = thumbnails.replace(height, "180");
+
                     videosData.push({
-                        url: result.url,
-                        id: result.id,
-                        title: result.title,
-                        thumbnails: result.thumbnails.medium.url,
-                        frameSrc: `https://www.youtube.com/embed/${result.id}?autoplay=1`
+                        url: video.url,
+                        id: video.id,
+                        title: video.title,
+                        thumbnails: thumbnails,
+                        frameSrc: `https://player.twitch.tv/?video=${video.id}&parent=localhost&autoplay=false`
+                    })
+                })
+
+                // Start the search from Youtube
+                searcher.search(topGames.data[randomIndex].name, {
+                    eventType: 'live',
+                    type: 'video'
+                }).then(result => {
+
+                    result.currentPage.forEach(result => {
+                        videosData.push({
+                            url: result.url,
+                            id: result.id,
+                            title: result.title,
+                            thumbnails: result.thumbnails.medium.url,
+                            frameSrc: `https://www.youtube.com/embed/${result.id}?autoplay=0`
+                        });
                     });
-                });
-                res.render('members', { link: videosData });
+                    // This function will shuffle the data
+                    function shuffle(a) {
+                        for (let i = a.length - 1; i > 0; i--) {
+                            const j = Math.floor(Math.random() * (i + 1));
+                            [a[i], a[j]] = [a[j], a[i]];
+                        }
+                        return a;
+                    }
+                    shuffle(videosData);
 
-            }).catch(err => console.log(err));
+                    res.render('members', { link: videosData });
+
+                }).catch(err => console.log(err));
+            })
         })
-    })
-  });
+    });
 
-//   app.get("/logout", isAuthenticated, function(req, res) {
-//     res.render('login')
-//   });
+    app.get("/logout", isAuthenticated, function (req, res) {
+        res.render('login')
+    });
 
-  app.get('/members/:query', isAuthenticated, (req,res)=> {
-    const data = [];
+    // Route for searching videos from Youtube and Twitch API
+    app.get("/members/:query", isAuthenticated, (req, res) => {
 
-        searcher.search(req.params.query, {
-            eventType: 'live',
-            type: 'video'
-        }).then(result => {
-            result.currentPage.forEach(result => {
-                data.push({
-                    url: result.url,
-                    id: result.id,
-                    title: result.title,
-                    thumbnails: result.thumbnails.medium.url
-                });
-            });
-            //This function will shuffle the data
-            function shuffle(a) {
-                for (let i = a.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [a[i], a[j]] = [a[j], a[i]];
-                }
-                return a;
-            }
-            shuffle(data);
+        const videosData = [];
 
-            res.render('search_results', {
-                link: data
-            });
-        }).catch(err=>console.log(err));        
-});
+        // Get the Game ID on Twitch API
+        twitch.getGames(req.params.query).then(game => {
 
+            // Get Video by Game ID
+            twitch.getVideos({
+                game_id: game.data[0].id,
+                first: "6",     // Limit result to 6 videos
+                sort: "views"
+            }).then(videosResult => {
+
+                videosResult.data.forEach(video => {
+                    const width = /(%{width})/g;
+                    const height = /(%{height})/g;
+
+                    let thumbnails = video.thumbnail_url.replace(width, "320");
+                    thumbnails = thumbnails.replace(height, "180");
+
+                    videosData.push({
+                        url: video.url,
+                        id: video.id,
+                        title: video.title,
+                        thumbnails: thumbnails,
+                        frameSrc: `https://player.twitch.tv/?video=${video.id}&parent=localhost&autoplay=false`
+                    })
+                })
+
+                // Start the search from Youtube
+                searcher.search(req.params.query, {
+                    eventType: 'live',
+                    type: 'video'
+                }).then(result => {
+
+                    result.currentPage.forEach(result => {
+                        videosData.push({
+                            url: result.url,
+                            id: result.id,
+                            title: result.title,
+                            thumbnails: result.thumbnails.medium.url,
+                            frameSrc: `https://www.youtube.com/embed/${result.id}?autoplay=0`
+                        });
+                    });
+
+                    //This function will shuffle the data
+                    function shuffle(a) {
+                        for (let i = a.length - 1; i > 0; i--) {
+                            const j = Math.floor(Math.random() * (i + 1));
+                            [a[i], a[j]] = [a[j], a[i]];
+                        }
+                        return a;
+                    }
+                    shuffle(videosData);
+
+                    res.render('members', { link: videosData });
+
+                }).catch(err => console.log(err));
+            })
+        })
+    });
 };
