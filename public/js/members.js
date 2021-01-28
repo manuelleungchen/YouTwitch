@@ -132,7 +132,8 @@ $(document).ready(function () {
         }
 
         window.location.replace(`/members/${newSearch.searchValue}`);
-    })
+
+    });
 
     const addBtnEl = document.querySelectorAll('.addBtn');
     addBtnEl.forEach((button) => {
@@ -150,7 +151,7 @@ $(document).ready(function () {
                 video: iframeElSrc,
                 thumbnail: imageElSrc,
                 title: titleEl
-            }
+            };
             fetch('/api/saved', {
                 method: 'POST',
                 headers: {
@@ -162,4 +163,4 @@ $(document).ready(function () {
             }).catch(err => console.log(err));
         });
     })
-})
+});
