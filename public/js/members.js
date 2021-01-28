@@ -93,6 +93,26 @@ $(document).ready(function () {
         }
     });
 
+
+    // Fetch Videos when using searchbar.
+
+    const createForm = document.getElementById('create-form');
+
+    createForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Grabs the value of the textarea that goes by the name, "quote"
+        const newSearch = {
+            searchValue: document.getElementById('search').value.trim(),
+        };
+
+        if (!newSearch.searchValue) {
+            return;
+        }
+
+        window.location.replace(`/members/${newSearch.searchValue}`);
+    }
+
     const addBtnEl = document.querySelectorAll('.addBtn');
     addBtnEl.forEach((button)=> {
         button.addEventListener("click", ()=> {
