@@ -12,7 +12,6 @@ loginFormEl.addEventListener('submit', (e) => {
     if (!userLogin.email || !userLogin.password) {
         return;
     }
-    console.log(userLogin);
 
     fetch('/api/login', {
         method: 'POST',

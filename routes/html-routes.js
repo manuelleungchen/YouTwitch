@@ -13,10 +13,11 @@ const searcher = new YTSearcher(API_KEY);
 
 // For Twitch npm 
 const TwitchApi = require("node-twitch").default;
+const db = require("../models");
 const twitch = new TwitchApi({
     client_id: process.env.CLIENT_ID,
     client_secret: process.env.CLIENT_SECRET
-})
+});
 
 
 module.exports = function (app) {
@@ -159,6 +160,7 @@ module.exports = function (app) {
                             thumbnails: result.thumbnails.medium.url,
                             frameSrc: `https://www.youtube.com/embed/${result.id}?autoplay=0`
                         });
+
                     });
 
                     //This function will shuffle the data
@@ -171,10 +173,37 @@ module.exports = function (app) {
                     }
                     shuffle(videosData);
 
+
                     res.render('members', { link: videosData });
 
                 }).catch(err => console.log(err));
             })
         })
     });
+  
+    app.get("/members/favorites/:member_name", isAuthenticated, (req,res) => {
+        db.User.findOne({
+            where: {
+                email: req.params.member_name
+            }
+        }).then(result=> {
+            console.log(result.dataValues);
+            db.saved.findAll({
+                where: {
+                    UserId: result.dataValues.id
+                }
+            }).then(data=> {
+                // res.send(data);
+                const values = [];
+                data.forEach(element => {
+                    values.push({
+                        frameSrc: element.videos,
+                        thumbnails: element.thumbnail,
+                        title: element.title
+                    });
+                })
+                res.render('favorites', {link: values});
+            }).catch(err=>console.log(err));
+        }).catch(err=> console.log(err));
+    })
 };
