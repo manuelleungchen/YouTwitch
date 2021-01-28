@@ -1,4 +1,9 @@
 $(document).ready(function () {
+    const darkModeNavbar = document.querySelector("#navToogle");
+    const darkModeSidebar = document.querySelector("#sidebarToggle");
+    const memberEL = document.querySelector(".member-name");
+
+
     // Toggle the side navbar
     $(".sidenav").sidenav();
 
@@ -29,8 +34,6 @@ $(document).ready(function () {
             $(".sidenav-trigger i").addClass("white-text");
             $(".card").removeClass("darkModeOFF");
             $(".card").addClass("darkModeON");
-            document.querySelector("#navToogle").setAttribute("checked", true);
-            document.querySelector("#sidebarToogle").setAttribute("checked", true);
 
         } else {
             // Dark Mode OFF
@@ -57,22 +60,43 @@ $(document).ready(function () {
             $(".sidenav-trigger i").addClass("black-text");
             $(".card").removeClass("darkModeON");
             $(".card").addClass("darkModeOFF");
-            document.querySelector("#navToogle").setAttribute("checked", false);
-            document.querySelector("#sidebarToogle").setAttribute("checked", false);
         }
     });
 
-
     // This file just does a GET request to figure out which user is logged in
-    // and updates the HTML on the page
+    // and updates the HTML on the page with the saved darkmode preferences
     $.get("/api/user_data").then(function (data) {
-        $(".member-name").text(data.email);
+        memberEL.textContent = data.email;
+        memberEL.setAttribute("data-userid", data.id);
+        // document.querySelector(".#navToogle").click()
+
+        if (data.darkmode === true) {
+            darkModeNavbar.click();
+            darkModeSidebar.checked = data.darkmode;
+        }
     });
+
+    darkModeNavbar.addEventListener("click", () => {
+        const data = {
+            id: memberEL.getAttribute("data-userid"),
+            darkmode: darkModeNavbar.checked
+        }
+        fetch('/api/darkmode', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'Application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(() => {
+            console.log('Updating to the database');
+        }).catch(err => console.log(err));
+    })
+    
 
     //onclick event for favorites
     const favoritesEl = document.querySelectorAll('#favorites');
     favoritesEl.forEach((favorite) => {
-        favorite.addEventListener('click', ()=> {
+        favorite.addEventListener('click', () => {
             const member_name = document.querySelector('.member-name').innerHTML;
             window.location.replace(`/members/favorites/${member_name}`);
         });
@@ -85,19 +109,16 @@ $(document).ready(function () {
 
     $('.modal').modal({
         opacity: 1,
-        onCloseEnd: ()=> {
-            iframe.forEach(video=>{
+        onCloseEnd: () => {
+            iframe.forEach(video => {
                 console.log(video.getAttribute('src'));
                 video.setAttribute('src', video.getAttribute('src'));
             })
         }
     });
 
-
     // Fetch Videos when using searchbar.
-
     const createForm = document.getElementById('create-form');
-
     createForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -111,11 +132,12 @@ $(document).ready(function () {
         }
 
         window.location.replace(`/members/${newSearch.searchValue}`);
+
     });
 
     const addBtnEl = document.querySelectorAll('.addBtn');
-    addBtnEl.forEach((button)=> {
-        button.addEventListener("click", ()=> {
+    addBtnEl.forEach((button) => {
+        button.addEventListener("click", () => {
             const siblingEl = button.previousElementSibling.getAttribute('href');
             const imageElSrc = button.previousElementSibling.children[0].getAttribute('src');
             const titleEl = button.parentElement.parentElement.children[2].children[0].innerHTML.toString();
@@ -136,7 +158,7 @@ $(document).ready(function () {
                     'Content-Type': 'Application/json'
                 },
                 body: JSON.stringify(savedVideoInfo)
-            }).then(()=> {
+            }).then(() => {
                 console.log('Adding to the database');
             }).catch(err => console.log(err));
         });

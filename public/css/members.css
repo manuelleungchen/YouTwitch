@@ -62,7 +62,9 @@ img {
 }
 
 .cardtext{
-    padding: 0;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
 }
 
 @media screen and (max-width: 400px) {
@@ -71,12 +73,3 @@ img {
         height: 300px;
     }
 }
-
-/* Sets portrait size and paddings for Screen below 992 pixels  */
-/* @media screen and (max-width: 992px) {
-    #logo span{
-        display: flex;
-        align-content: center;
-        color: blue;
-    }
-} */

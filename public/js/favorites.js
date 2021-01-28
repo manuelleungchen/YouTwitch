@@ -30,7 +30,6 @@ $(document).ready(function () {
             $(".card").removeClass("darkModeOFF");
             $(".card").addClass("darkModeON");
             document.querySelector("#navToogle").setAttribute("checked", true);
-            document.querySelector("#sidebarToogle").setAttribute("checked", true);
 
         } else {
             // Dark Mode OFF
@@ -58,16 +57,35 @@ $(document).ready(function () {
             $(".card").removeClass("darkModeON");
             $(".card").addClass("darkModeOFF");
             document.querySelector("#navToogle").setAttribute("checked", false);
-            document.querySelector("#sidebarToogle").setAttribute("checked", false);
         }
     });
 
-
     // This file just does a GET request to figure out which user is logged in
-    // and updates the HTML on the page
+    // and updates the HTML on the page with the saved darkmode preferences
     $.get("/api/user_data").then(function (data) {
         $(".member-name").text(data.email);
+        if(data.darkmode === true) {
+            document.querySelector("#navToogle").click()
+            document.querySelector("#sidebarToggle").click()
+        }
     });
+
+    // Fetch Videos when using searchbar.
+    const createForm = document.getElementById('create-form');
+    createForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Grabs the value of the textarea that goes by the name, "quote"
+        const newSearch = {
+            searchValue: document.getElementById('search').value.trim(),
+        };
+
+        if (!newSearch.searchValue) {
+            return;
+        }
+
+        window.location.replace(`/members/${newSearch.searchValue}`);
+    })
 
     //onclick event for favorites
     const favoritesEl = document.querySelectorAll('#favorites');

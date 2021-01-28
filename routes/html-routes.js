@@ -59,7 +59,7 @@ module.exports = function (app) {
             // Get videos from selected index
             twitch.getVideos({
                 game_id: topGames.data[randomIndex].id,
-                first: "6",  // Limit results to 6
+                first: "5",  // Limit results to 5
                 sort: "views"
             }).then(videosResult => {
 
@@ -126,7 +126,7 @@ module.exports = function (app) {
             // Get Video by Game ID
             twitch.getVideos({
                 game_id: game.data[0].id,
-                first: "6",     // Limit result to 6 videos
+                first: "5",     // Limit result to 5 videos
                 sort: "views"
             }).then(videosResult => {
 
@@ -193,7 +193,6 @@ module.exports = function (app) {
                     UserId: result.dataValues.id
                 }
             }).then(data=> {
-                // res.send(data);
                 const values = [];
                 data.forEach(element => {
                     values.push({
