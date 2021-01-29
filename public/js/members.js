@@ -74,7 +74,7 @@ $(document).ready(() => {
     }
   });
 
-  // Event Listening for Darkmode toggle 
+  // Event Listening for Darkmode toggle
   darkModeNavbar.addEventListener('click', () => {
     const data = {
       id: memberEL.getAttribute('data-userid'),
@@ -95,22 +95,24 @@ $(document).ready(() => {
   });
 
   // Event Listening Darkmode toggle for Mobile
-  darkModeSidebar.addEventListener("click", () => {
-        const data = {
-            id: memberEL.getAttribute("data-userid"),
-            darkmode: darkModeSidebar.checked
-        }
-        // Create PUT request to update Users table
-        fetch('/api/darkmode', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'Application/json'
-            },
-            body: JSON.stringify(data)
-        }).then(() => {
-            console.log('Updating to the database');
-        }).catch(err => console.log(err));
-    })
+  darkModeSidebar.addEventListener('click', () => {
+    const data = {
+      id: memberEL.getAttribute('data-userid'),
+      darkmode: darkModeSidebar.checked,
+    };
+    // Create PUT request to update Users table
+    fetch('/api/darkmode', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'Application/json',
+      },
+      body: JSON.stringify(data),
+    }).then(() => {
+      // eslint-disable-next-line no-console
+      console.log('Updating to the database');
+      // eslint-disable-next-line no-console
+    }).catch((err) => console.log(err));
+  });
 
   // onclick event for favorites
   const favoritesEl = document.querySelectorAll('#favorites');
