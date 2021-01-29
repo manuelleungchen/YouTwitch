@@ -71,7 +71,7 @@ $(document).ready(function () {
     });
 
     // Fetch Videos when using searchbar.
-    const createForm = document.getElementById('create-form');
+    const createForm = document.querySelector('#search-form');
     createForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
