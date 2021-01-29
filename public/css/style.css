@@ -5,4 +5,48 @@
     padding: 10px;
     border-style: solid;
     border-radius: 25px;
+    background-color: linen;
 }
+
+img {
+    width: 50px;
+    padding: 5px;
+}
+
+#logo {
+    display: flex;
+    align-items: center;
+}
+
+body {
+    background-color: lightskyblue;
+    background-image: url(../images/youtwitchbg.png);
+    background-repeat: repeat-y;
+    background-size: cover;
+}
+
+#submitBtn {
+    border-radius: 10%;
+}
+
+footer {
+    position: fixed;
+    clear: both;
+    width: 100%;
+    bottom: 0%;
+    height: 50px;
+    line-height: 50px;
+    background-color: gray;
+    text-align: center;
+    border-top-width: 5px;
+    border-top-style: solid;
+    border-top-color:linen;
+}
+
+@media only screen and (min-width: 280px) {
+    .login {
+      width: 95%; } }
+
+@media only screen and (min-width: 700px) {
+    .login {
+        width: 50%; } }
