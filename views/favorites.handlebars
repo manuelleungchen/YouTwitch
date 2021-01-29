@@ -1,8 +1,9 @@
 <link rel="stylesheet" href="/css/members.css">
-
+<!-- Load CSS style -->
 <header>
+<!-- Creates a navbar -->
     <nav id="nav" class="row blue darken-2">
-        <div class="col s12 m12 l3">
+        <div class="col s12 m12 l3"><!-- Logo Section -->
             <a href="#" class="sidenav-trigger hide-on-large-only left" data-target="nav-mobile">
                 <i class="material-icons black-text">menu</i>
             </a>
@@ -13,7 +14,7 @@
                 </div>
             </a>
         </div>
-        <div class="col s12 m12 l5">
+        <div class="col s12 m12 l5"><!-- Searchbar Section -->
             <form>
                 <div id="searchBarDiv">
                     <input id="search" class="darkModeOFF" type="search" required placeholder="Search">
@@ -22,8 +23,7 @@
                 </div>
             </form>
         </div>
-
-        <div class="col s12 m12 l4">
+        <div class="col s12 m12 l4"><!-- Nav links Section -->
             <ul class="right hide-on-med-and-down" id="navLinks">
                 <li>
                     <!-- Switch -->
@@ -38,7 +38,7 @@
                 <li><a class="black-text" id='favorites'>Favorites</a></li>
                 <li><a href="logout" class="black-text">Logout</a></li>
             </ul>
-            <ul id="nav-mobile" class="sidenav">
+            <ul id="nav-mobile" class="sidenav"><!-- Sidebar Menu -->
                 <li>
                     <h5 class="black-text">Signed as:</h5>
                 </li>
@@ -62,10 +62,12 @@
     </nav>
 </header>
 
+<!-- Main Container -->
 <div class="container">
     <div class="row">
         {{#if link}}
         {{#each link}}
+        <!-- Partials Video component -->
         {{> videos/favorites-block}}
 
         <!-- Modal Structure -->
