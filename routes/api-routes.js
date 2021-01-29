@@ -2,16 +2,12 @@
 var db = require("../models");
 var passport = require("../config/passport");
 
+
 module.exports = function(app) {
   // Using the passport.authenticate middleware with our local strategy.
   // If the user has valid login credentials, send them to the members page.
   // Otherwise the user will be sent an error
   app.post("/api/login", passport.authenticate("local"), function(req, res) {
-    // res.json({
-    //   //Returning the user email
-    //   email: req.user.email,
-    //   id: req.user.id
-    // });
     res.json(req.user);
   });
 
@@ -32,10 +28,10 @@ module.exports = function(app) {
   });
 
   // Route for logging user out
-  app.get("/logout", function(req, res) {
-    req.logout();
-    res.redirect("/");
-  });
+//   app.get("/logout", function(req, res) {
+//     req.logout();
+//     res.redirect("/");
+//   });
 
   // Route for getting some data about our user to be used client side
   app.get("/api/user_data", function(req, res) {
@@ -47,8 +43,48 @@ module.exports = function(app) {
       // Sending back a password, even a hashed password, isn't a good idea
       res.json({
         email: req.user.email,
-        id: req.user.id
+        id: req.user.id,
+        darkmode: req.user.darkmode
       });
     }
   });
-};
+  
+  // Route to save user videos
+  app.post("/api/saved", (req,res)=> {
+    db.User.findOne({
+      where: {
+        email: req.body.email
+      }
+    }).then((result) => {
+      db.saved.create({
+        UserId: result.dataValues.id,
+        videos: req.body.video,
+        thumbnail: req.body.thumbnail,
+        title: req.body.title
+      }).then(()=> {
+        console.log('Added to the database');
+      }).catch(err=>console.log(err));
+    }).catch(err=>console.log(err));
+  });
+
+  // Route to update darkmode preference
+  app.put('/api/darkmode', (req, res) => {
+    db.User.update(
+      {
+        darkmode: req.body.darkmode,
+      },
+      {
+          where: {
+            id: req.body.id
+          }
+      },
+      (result) => {
+        if (result.changedRows === 0) {
+          // If no rows were changed, then the ID must not exist, so 404
+          return res.status(404).end();
+        }
+        res.status(200).end();
+      }
+    );
+  });
+ };

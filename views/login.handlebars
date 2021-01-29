@@ -1,3 +1,19 @@
+<link rel="stylesheet" href="./css/style.css">
+<header>
+        <nav id="nav" class="row blue darken-2">
+        <div class="col s12 m12 l3">
+            <a href="#" class="sidenav-trigger hide-on-large-only left" data-target="nav-mobile">
+                <i class="material-icons black-text">menu</i>
+            </a>
+            <a href="#" class="brand-logo">
+                <div id="logo">
+                    <img src="./images/YouTwitch.png" alt="">
+                    <span class="black-text">YouTwitch</span>
+                </div>
+            </a>
+        </div>
+</header>
+<body>
 <article class='row login'>
     <form id='login_form' class='col s12'>
         <h2>Login</h2>
@@ -9,8 +25,14 @@
         </div>
         <label for='login_input_password'>Enter password:</label>
         <input type="password" id='login_input_password' placeholder="Enter password here..." />
-        <button>Submit</button>
+        <button id="submitBtn">Submit</button>
+        <p id="sign-up" style="padding-top: 10px;">Don't have an account? <a href="/">Sign up</a></p>
     </form>
 </article>
+</body>
+
+    <footer class="footer">
+        @YouTwitch 2021
+    </footer>
 
 <script src="./js/login.js"></script>

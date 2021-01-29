@@ -1,19 +1,22 @@
-
+/* Set the default background and font color */
 body {
     background-color: #f5f5f5;
     color: #424242;
 }
 
+/* Add padding to image */
 img {
     width: 50px;
     padding: 5px;
 }
 
+/* Set logo in the center */
 #logo {
     display: flex;
     align-items: center;
 }
 
+/* Set the display arragement of Searchbar area */
 #searchBarDiv {
     display: flex;
     flex-direction: row;
@@ -21,25 +24,19 @@ img {
     margin-top: 5px;
 }
 
+/* Set padding and borders on searchbar input */
 #searchBarDiv input {
     padding-left: 10px;
     border-radius: 5px;
 }
 
+/* Style the searchbar button */
 #searchBarDiv button {
     border-radius: 5px;
     border: none;
 }
 
-#videoDiv {
-    width: 200px;
-    height: 200px;
-    background-color: gray;
-    text-align: center;
-    padding: 40px;
-    margin: 10px;
-}
-
+/* Set background color and padding for Sidebar */
 #nav-mobile {
     padding-left: 10px;
     /* Side Menu Background Color */
@@ -47,6 +44,7 @@ img {
     /* color: black; */
 }
 
+/* Set Background to White */
 .darkModeOFF {
     /* Font Color */
     color: #212121;
@@ -54,7 +52,7 @@ img {
     background-color: #fafafa;
 }
 
-
+/* Set Background to Dark */
 .darkModeON {
     /* Font Color */
     color: #fafafa;
@@ -62,18 +60,17 @@ img {
     background-color: black;
 }
 
-.card-content {
+/* Trim the video title size to fit Video div */
+.cardtext{
     white-space: nowrap; 
     overflow: hidden;
     text-overflow: ellipsis; 
-  }
+}
 
-
-/* Sets portrait size and paddings for Screen below 992 pixels  */
-/* @media screen and (max-width: 992px) {
-    #logo span{
-        display: flex;
-        align-content: center;
-        color: blue;
+/* Set the size of Modal video */
+@media screen and (max-width: 400px) {
+    #iframe {
+        width: 105%;
+        height: 300px;
     }
-} */
+}
