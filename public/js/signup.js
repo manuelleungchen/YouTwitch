@@ -1,4 +1,4 @@
-const createformEl = document.querySelector('#signup');
+const createformEl = document.querySelector('.signup');
 const createInputEmailEl = document.querySelector("#email-input");
 const createInputPasswordEl = document.querySelector("#password-input");
 
@@ -13,7 +13,6 @@ createformEl.addEventListener('submit', (e)=> {
         return;
     }
 
-
     fetch('/api/signup', {
         method: 'POST',
         headers: {
@@ -22,7 +21,7 @@ createformEl.addEventListener('submit', (e)=> {
         },
         body: JSON.stringify(newUser)
     }).then(()=> {
-        // window.location.replace('/members');
+        window.location.replace('/members');
         console.log(newUser)
     })
 });

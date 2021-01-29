@@ -26,22 +26,16 @@ module.exports = function (app) {
         // If the user already has an account send them to the members page
         if (req.user) {
             res.redirect("/members");
-
         }
-        res.render('signup');
-        // res.sendFile(path.join(__dirname, "../public/signup.html"));
+        res.render('login');
     });
 
-    app.get("/login", function (req, res) {
+    app.get("/signup", function (req, res) {
         // If the user already has an account send them to the members page
         if (req.user) {
-
             res.redirect("/members");
-            // res.redirect("/members/videos");
-
         }
-        // res.sendFile(path.join(__dirname, "../public/login.html"));
-        res.render('login');
+        res.render('signup');
     });
 
     // Here we've add our isAuthenticated middleware to this route.
@@ -110,9 +104,11 @@ module.exports = function (app) {
         })
     });
 
-    app.get("/logout", isAuthenticated, function (req, res) {
-        res.render('login')
+    app.get("/members/favorites/logout", isAuthenticated, function (req, res) {
+        req.logout();
+        res.redirect("/");
     });
+
 
     // Route for searching videos from Youtube and Twitch API
     app.get("/members/:query", isAuthenticated, (req, res) => {
@@ -180,6 +176,7 @@ module.exports = function (app) {
         })
     });
   
+    // Route for add
     app.get("/members/favorites/:member_name", isAuthenticated, (req,res) => {
         db.User.findOne({
             where: {

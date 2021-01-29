@@ -1,4 +1,10 @@
+// When page is loaded
 $(document).ready(function () {
+    // Getting checkbox tooglers and member name div
+    const darkModeNavbar = document.querySelector("#navToogle");
+    const darkModeSidebar = document.querySelector("#sidebarToggle");
+    const memberEL = document.querySelector(".member-name");
+
     // Toggle the side navbar
     $(".sidenav").sidenav();
 
@@ -29,7 +35,6 @@ $(document).ready(function () {
             $(".sidenav-trigger i").addClass("white-text");
             $(".card").removeClass("darkModeOFF");
             $(".card").addClass("darkModeON");
-            document.querySelector("#navToogle").setAttribute("checked", true);
 
         } else {
             // Dark Mode OFF
@@ -56,19 +61,56 @@ $(document).ready(function () {
             $(".sidenav-trigger i").addClass("black-text");
             $(".card").removeClass("darkModeON");
             $(".card").addClass("darkModeOFF");
-            document.querySelector("#navToogle").setAttribute("checked", false);
         }
     });
 
     // This file just does a GET request to figure out which user is logged in
     // and updates the HTML on the page with the saved darkmode preferences
     $.get("/api/user_data").then(function (data) {
-        $(".member-name").text(data.email);
-        if(data.darkmode === true) {
-            document.querySelector("#navToogle").click()
-            document.querySelector("#sidebarToggle").click()
+        memberEL.textContent = data.email;
+        memberEL.setAttribute("data-userid", data.id);
+        // Check user mode preference of database
+        if (data.darkmode === true) {
+            darkModeNavbar.click();
+            darkModeSidebar.checked = data.darkmode;
         }
     });
+
+    // Event Listening for Darkmode toggle 
+    darkModeNavbar.addEventListener("click", () => {
+        const data = {
+            id: memberEL.getAttribute("data-userid"),
+            darkmode: darkModeNavbar.checked
+        }
+        // Create PUT request to update Users table
+        fetch('/api/darkmode', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'Application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(() => {
+            console.log('Updating to the database');
+        }).catch(err => console.log(err));
+    });
+
+    // Event Listening Darkmode toggle for Mobile
+    darkModeSidebar.addEventListener("click", () => {
+        const data = {
+            id: memberEL.getAttribute("data-userid"),
+            darkmode: darkModeSidebar.checked
+        }
+        // Create PUT request to update Users table
+        fetch('/api/darkmode', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'Application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(() => {
+            console.log('Updating to the database');
+        }).catch(err => console.log(err));
+    })
 
     // Fetch Videos when using searchbar.
     const createForm = document.querySelector('#search-form');
@@ -87,7 +129,7 @@ $(document).ready(function () {
         window.location.replace(`/members/${newSearch.searchValue}`);
     })
 
-    //onclick event for favorites
+    // Onclick event for favorites
     const favoritesEl = document.querySelectorAll('#favorites');
     favoritesEl.forEach((favorite) => {
         favorite.addEventListener('click', ()=> {
