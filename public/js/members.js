@@ -1,15 +1,16 @@
+// When page is loaded
 $(document).ready(function () {
+    // Getting checkbox tooglers and member name div
     const darkModeNavbar = document.querySelector("#navToogle");
     const darkModeSidebar = document.querySelector("#sidebarToggle");
     const memberEL = document.querySelector(".member-name");
-
 
     // Toggle the side navbar
     $(".sidenav").sidenav();
 
     // Toggle Dark mode
     $(".switch label input").change(function () {
-        if (this.checked) {
+        if (this.checked) { // If darkmode toogle is checked
             // Dark Mode ON
             $("body").css("background-color", "#212121");
             $("body").css("color", "white");
@@ -68,19 +69,38 @@ $(document).ready(function () {
     $.get("/api/user_data").then(function (data) {
         memberEL.textContent = data.email;
         memberEL.setAttribute("data-userid", data.id);
-        // document.querySelector(".#navToogle").click()
-
+        // Check user mode preference of database
         if (data.darkmode === true) {
             darkModeNavbar.click();
             darkModeSidebar.checked = data.darkmode;
         }
     });
 
+    // Event Listening for Darkmode toggle 
     darkModeNavbar.addEventListener("click", () => {
         const data = {
             id: memberEL.getAttribute("data-userid"),
             darkmode: darkModeNavbar.checked
         }
+        // Create PUT request to update Users table
+        fetch('/api/darkmode', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'Application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(() => {
+            console.log('Updating to the database');
+        }).catch(err => console.log(err));
+    });
+
+    // Event Listening Darkmode toggle for Mobile
+    darkModeSidebar.addEventListener("click", () => {
+        const data = {
+            id: memberEL.getAttribute("data-userid"),
+            darkmode: darkModeSidebar.checked
+        }
+        // Create PUT request to update Users table
         fetch('/api/darkmode', {
             method: 'PUT',
             headers: {
@@ -91,9 +111,8 @@ $(document).ready(function () {
             console.log('Updating to the database');
         }).catch(err => console.log(err));
     })
-    
 
-    //onclick event for favorites
+    // Onclick event for favorites
     const favoritesEl = document.querySelectorAll('#favorites');
     favoritesEl.forEach((favorite) => {
         favorite.addEventListener('click', () => {
@@ -102,6 +121,7 @@ $(document).ready(function () {
         });
     });
 
+    // Modal for Video Player
     const iframe = document.querySelectorAll('.iframe');
     $(".modal").on('hidden.bs.modal', function (e) {
         $(".modal iframe").attr("src", $(".modal iframe").attr("src"));
@@ -111,7 +131,6 @@ $(document).ready(function () {
         opacity: 1,
         onCloseEnd: () => {
             iframe.forEach(video => {
-                console.log(video.getAttribute('src'));
                 video.setAttribute('src', video.getAttribute('src'));
             })
         }
@@ -130,18 +149,18 @@ $(document).ready(function () {
         if (!newSearch.searchValue) {
             return;
         }
-
+        // Redirect to another page
         window.location.replace(`/members/${newSearch.searchValue}`);
 
     });
 
+    // Event listening for Favorites Button
     const addBtnEl = document.querySelectorAll('.addBtn');
     addBtnEl.forEach((button) => {
         button.addEventListener("click", () => {
             const siblingEl = button.previousElementSibling.getAttribute('href');
             const imageElSrc = button.previousElementSibling.children[0].getAttribute('src');
             const titleEl = button.parentElement.parentElement.children[2].children[0].innerHTML.toString();
-            console.log(titleEl);
             const siblingElInt = siblingEl.replace(/^\D+/g, '');
             const id = document.getElementById(siblingElInt);
             const iframeElSrc = id.childNodes[1].children[0].getAttribute('src');
@@ -152,6 +171,7 @@ $(document).ready(function () {
                 thumbnail: imageElSrc,
                 title: titleEl
             };
+            // Create a POST request to favorites table
             fetch('/api/saved', {
                 method: 'POST',
                 headers: {
