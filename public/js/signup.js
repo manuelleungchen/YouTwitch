@@ -1,8 +1,9 @@
-const createformEl = document.querySelector('.signup');
+const createformEl = document.querySelector('#signup');
 const createInputEmailEl = document.querySelector("#email-input");
 const createInputPasswordEl = document.querySelector("#password-input");
 
 createformEl.addEventListener('submit', (e)=> {
+    console.log("IS THIS RUNNING");
     e.preventDefault();
     const newUser = {
         email: createInputEmailEl.value.trim(),

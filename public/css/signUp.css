@@ -2,17 +2,3 @@
     font-size: 25px;
     line-height: 50px;
 }
-
-footer {
-    position: fixed;
-    clear: both;
-    width: 100%;
-    bottom: 0%;
-    height: 50px;
-    line-height: 50px;
-    background-color: gray;
-    text-align: center;
-    border-top-width: 5px;
-    border-top-style: solid;
-    border-top-color:linen;
-}
