@@ -22,7 +22,6 @@ body {
     background-color: lightskyblue;
     background-image: url(../images/youtwitchbg.png);
     background-repeat: repeat-y;
-    background-repeat: repeat-x;
     background-size: cover;
 }
 
@@ -32,6 +31,7 @@ body {
 
 footer {
     position: fixed;
+    clear: both;
     width: 100%;
     bottom: 0%;
     height: 50px;
@@ -42,3 +42,11 @@ footer {
     border-top-style: solid;
     border-top-color:linen;
 }
+
+@media only screen and (min-width: 280px) {
+    .login {
+      width: 95%; } }
+
+@media only screen and (min-width: 700px) {
+    .login {
+        width: 50%; } }
