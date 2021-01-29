@@ -103,10 +103,6 @@ module.exports = (app) => {
     });
   });
 
-  app.get('/logout', isAuthenticated, (req, res) => {
-    res.render('login');
-  });
-
   // Route for searching videos from Youtube and Twitch API
   app.get('/members/:query', isAuthenticated, (req, res) => {
     const videosData = [];
