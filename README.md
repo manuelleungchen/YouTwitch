@@ -30,7 +30,7 @@ The live project can be viewed here:
 
 
 ## Authors
-Authors: Manuel Leung Chen, Jhonny Lin, Karl Emmanuel Tulio, Faizah Kibria
+Authors: Manuel Leung Chen (GitHub username: manuelleungchen), Jhonny Lin (Github username: Jlin72), Karl Emmanuel Tulio (Github username: fulcrum-ctrl), Faizah Kibria(Github username: fkibria)
 
 
 ## License
