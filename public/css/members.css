@@ -1,6 +1,6 @@
 /* Set the default background and font color */
 body {
-    background-color: #f5f5f5;
+    background-color:lightskyblue;
     color: #424242;
 }
 
@@ -65,6 +65,21 @@ img {
     white-space: nowrap; 
     overflow: hidden;
     text-overflow: ellipsis; 
+}
+
+/*Footer style */
+footer {
+    position: fixed;
+    clear: both;
+    width: 100%;
+    bottom: 0%;
+    height: 50px;
+    line-height: 50px;
+    background-color: gray;
+    text-align: center;
+    border-top-width: 5px;
+    border-top-style: solid;
+    border-top-color:linen;
 }
 
 /* Set the size of Modal video */

@@ -108,3 +108,7 @@ node_modules
 
 # MacOS Dir file
 .DS_Store
+__MACOSX
+
+# VSCode
+.vscode

@@ -1,30 +1,4 @@
-body{
-    /* background-color: crimson; */
-}
-.text {
+.text{
     font-size: 25px;
     line-height: 50px;
-}
-
- .input-field {
-width: 50%;
-
-}
-
-.container{
-    margin-top: 15%;
-}
-.child{
-    background-color: cyan;
-    border-radius: 2%;
-    border-style: solid;
-}
-
-#YTLogo{
-    margin-top: 10px;
-}
-
-.logo-text{
-    /* text-align: center; */
-    padding-bottom: 10px;
 }

@@ -117,39 +117,38 @@ $(document).ready(function () {
     createForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        // Grabs the value of the textarea that goes by the name, "quote"
-        const newSearch = {
-            searchValue: document.getElementById('search').value.trim(),
-        };
+    // Grabs the value of the textarea that goes by the name, "quote"
+    const newSearch = {
+      searchValue: document.getElementById('search').value.trim(),
+    };
 
-        if (!newSearch.searchValue) {
-            return;
-        }
+    if (!newSearch.searchValue) {
+      return;
+    }
 
-        window.location.replace(`/members/${newSearch.searchValue}`);
-    })
+    window.location.replace(`/members/${newSearch.searchValue}`);
+  });
 
-    // Onclick event for favorites
-    const favoritesEl = document.querySelectorAll('#favorites');
-    favoritesEl.forEach((favorite) => {
-        favorite.addEventListener('click', ()=> {
-            const member_name = document.querySelector('.member-name').innerHTML;
-            window.location.replace(`/members/favorites/${member_name}`);
-        });
+  // onclick event for favorites
+  const favoritesEl = document.querySelectorAll('#favorites');
+  favoritesEl.forEach((favorite) => {
+    favorite.addEventListener('click', () => {
+      const memberName = document.querySelector('.member-name').innerHTML;
+      window.location.replace(`/members/favorites/${memberName}`);
     });
+  });
 
-    const iframe = document.querySelectorAll('.iframe');
-    $(".modal").on('hidden.bs.modal', function (e) {
-        $(".modal iframe").attr("src", $(".modal iframe").attr("src"));
-    });
+  const iframe = document.querySelectorAll('.iframe');
+  $('.modal').on('hidden.bs.modal', () => {
+    $('.modal iframe').attr('src', $('.modal iframe').attr('src'));
+  });
 
-    $('.modal').modal({
-        opacity: 1,
-        onCloseEnd: ()=> {
-            iframe.forEach(video=>{
-                console.log(video.getAttribute('src'));
-                video.setAttribute('src', video.getAttribute('src'));
-            })
-        }
-    });
-})
+  $('.modal').modal({
+    opacity: 1,
+    onCloseEnd: () => {
+      iframe.forEach((video) => {
+        video.setAttribute('src', video.getAttribute('src'));
+      });
+    },
+  });
+});
