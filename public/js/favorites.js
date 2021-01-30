@@ -8,6 +8,26 @@ $(document).ready(function () {
     // Toggle the side navbar
     $(".sidenav").sidenav();
 
+     // Save darkmode settings to DB
+     const darkmodeSave = function () {
+        const data = {
+            id: memberEL.getAttribute('data-userid'),
+            darkmode: this.checked,
+        };
+        // Create PUT request to update Users table
+        fetch('/api/darkmode', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'Application/json',
+            },
+            body: JSON.stringify(data),
+        }).then(() => {
+            // eslint-disable-next-line
+            console.log('Updating to the database');
+            // eslint-disable-next-line
+        }).catch((err) => console.log(err));
+    }
+
     // Toggle Dark mode
     $(".switch label input").change(function () {
         if (this.checked) {
@@ -66,9 +86,10 @@ $(document).ready(function () {
 
     // This file just does a GET request to figure out which user is logged in
     // and updates the HTML on the page with the saved darkmode preferences
-    $.get("/api/user_data").then(function (data) {
+    $.get('/api/user_data').then(function (data) {
         memberEL.textContent = data.email;
         memberEL.setAttribute("data-userid", data.id);
+
         // Check user mode preference of database
         if (data.darkmode === true) {
             darkModeNavbar.click();
@@ -76,79 +97,49 @@ $(document).ready(function () {
         }
     });
 
-    // Event Listening for Darkmode toggle 
-    darkModeNavbar.addEventListener("click", () => {
-        const data = {
-            id: memberEL.getAttribute("data-userid"),
-            darkmode: darkModeNavbar.checked
-        }
-        // Create PUT request to update Users table
-        fetch('/api/darkmode', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'Application/json'
-            },
-            body: JSON.stringify(data)
-        }).then(() => {
-            console.log('Updating to the database');
-        }).catch(err => console.log(err));
-    });
+     // Event Listening for Darkmode toggle 
+     darkModeNavbar.addEventListener("click", darkmodeSave);
 
-    // Event Listening Darkmode toggle for Mobile
-    darkModeSidebar.addEventListener("click", () => {
-        const data = {
-            id: memberEL.getAttribute("data-userid"),
-            darkmode: darkModeSidebar.checked
-        }
-        // Create PUT request to update Users table
-        fetch('/api/darkmode', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'Application/json'
-            },
-            body: JSON.stringify(data)
-        }).then(() => {
-            console.log('Updating to the database');
-        }).catch(err => console.log(err));
-    })
+     // Event Listening Darkmode toggle for Mobile
+     darkModeSidebar.addEventListener("click", darkmodeSave);
 
     // Fetch Videos when using searchbar.
     const createForm = document.querySelector('#search-form');
     createForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
-    // Grabs the value of the textarea that goes by the name, "quote"
-    const newSearch = {
-      searchValue: document.getElementById('search').value.trim(),
-    };
+        // Grabs the value of the textarea that goes by the name, "quote"
+        const newSearch = {
+            searchValue: document.getElementById('search').value.trim(),
+        };
 
-    if (!newSearch.searchValue) {
-      return;
-    }
+        if (!newSearch.searchValue) {
+            return;
+        }
 
-    window.location.replace(`/members/${newSearch.searchValue}`);
-  });
-
-  // onclick event for favorites
-  const favoritesEl = document.querySelectorAll('#favorites');
-  favoritesEl.forEach((favorite) => {
-    favorite.addEventListener('click', () => {
-      const memberName = document.querySelector('.member-name').innerHTML;
-      window.location.replace(`/members/favorites/${memberName}`);
+        window.location.replace(`/members/${newSearch.searchValue}`);
     });
-  });
 
-  const iframe = document.querySelectorAll('.iframe');
-  $('.modal').on('hidden.bs.modal', () => {
-    $('.modal iframe').attr('src', $('.modal iframe').attr('src'));
-  });
+    // onclick event for favorites
+    const favoritesEl = document.querySelectorAll('#favorites');
+    favoritesEl.forEach((favorite) => {
+        favorite.addEventListener('click', () => {
+            const memberName = document.querySelector('.member-name').innerHTML;
+            window.location.replace(`/members/favorites/${memberName}`);
+        });
+    });
 
-  $('.modal').modal({
-    opacity: 1,
-    onCloseEnd: () => {
-      iframe.forEach((video) => {
-        video.setAttribute('src', video.getAttribute('src'));
-      });
-    },
-  });
+    const iframe = document.querySelectorAll('.iframe');
+    $('.modal').on('hidden.bs.modal', () => {
+        $('.modal iframe').attr('src', $('.modal iframe').attr('src'));
+    });
+
+    $('.modal').modal({
+        opacity: 1,
+        onCloseEnd: () => {
+            iframe.forEach((video) => {
+                video.setAttribute('src', video.getAttribute('src'));
+            });
+        },
+    });
 });
