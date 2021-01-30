@@ -1,17 +1,24 @@
 <link rel="stylesheet" href="css/signUp.css">
-<nav class="cyan">
-    <div class="nav-wrapper">
-        <a href="#" class="brand-logo">
-            <img src="images/YouTwitch.png" height="50px" width="50px" id="YTLogo">
-            <span class="purple-text logo-text">YouTwitch</span>
-        </a>
-    </div>
-</nav>
+<header>
+    <nav id="nav" class="row blue darken-2">
+        <div class="col s12 m12 l3">
+            <a href="#" class="sidenav-trigger hide-on-large-only left" data-target="nav-mobile">
+                <i class="material-icons black-text">menu</i>
+            </a>
+            <a href="#" class="brand-logo">
+                <div id="logo">
+                    <img src="./images/YouTwitch.png" alt="">
+                    <span class="black-text">YouTwitch</span>
+                </div>
+            </a>
+        </div>
+</header>
+
 
 <div class="container">
     <div class="child row">
-        <h3 class="upText">Sign Up Form</h3>
-        <form class="signup col s10">
+        <form class="signup col s12">
+            <h3 class="upText">Sign Up Form</h3>
             <div class="input-field col s6">
                 <i class="tiny material-icons">email</i>
                 <input type="email" class="" id="email-input" placeholder="Email">
@@ -21,8 +28,8 @@
                 <input type="password" class="" id="password-input" placeholder="Password">
             </div>
             <div class="col s12">
-                <button type="submit" class="col s2 waves-effect waves-light btn" id="signUp">Sign Up</button>
-                <p class="col s6 push s1 text">or log in <a href="/">here</a></p>
+                <button type="submit" class="col s2 waves-effect blue darken-2 btn" id="signUp" style="padding: 2px; margin:5px;">Sign Up</button>
+                <p class="s1 text" style="margin: 2px;">or log in <a href="/">here</a></p>
             </div>
         </form>
     </div>
