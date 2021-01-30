@@ -1,121 +1,124 @@
 // When page is loaded
-$(document).ready(function () {
-    // Getting checkbox tooglers and member name div
-    const darkModeNavbar = document.querySelector("#navToogle");
-    const darkModeSidebar = document.querySelector("#sidebarToggle");
-    const memberEL = document.querySelector(".member-name");
+$(document).ready(() => {
+  // Getting checkbox tooglers and member name div
+  const darkModeNavbar = document.querySelector('#navToogle');
+  const darkModeSidebar = document.querySelector('#sidebarToggle');
+  const memberEL = document.querySelector('.member-name');
 
-    // Toggle the side navbar
-    $(".sidenav").sidenav();
+  // Toggle the side navbar
+  $('.sidenav').sidenav();
 
-    // Toggle Dark mode
-    $(".switch label input").change(function () {
-        if (this.checked) {
-            // Dark Mode ON
-            $("body").css("background-color", "#212121");
-            $("body").css("color", "white");
-            $("#nav-mobile").css("background-color", "#000000");
-            $("#searchBarDiv input").removeClass("darkModeOFF");
-            $("#searchBarDiv input").addClass("darkModeON");
-            $("#searchBarDiv button i").removeClass("grey-darken-3-text");
-            $("#searchBarDiv button i").addClass("white-text");
-            $("#logo span").removeClass("black-text");
-            $("#logo span").addClass("white-text");
-            $("#nav-mobile li h5").removeClass("black-text");
-            $("#nav-mobile li h5").addClass("white-text");
-            $("#nav-mobile li h6").removeClass("black-text");
-            $("#nav-mobile li h6").addClass("white-text");
-            $("#nav-mobile li a").removeClass("black-text");
-            $("#nav-mobile li a").addClass("white-text");
-            $(".switch label").removeClass("black-text");
-            $(".switch label").addClass("white-text");
-            $("#navLinks li a").removeClass("black-text");
-            $("#navLinks li a").addClass("white-text");
-            $(".sidenav-trigger i").removeClass("black-text");
-            $(".sidenav-trigger i").addClass("white-text");
-            $(".card").removeClass("darkModeOFF");
-            $(".card").addClass("darkModeON");
+  // Toggle Dark mode
+  $('.switch label input').change(() => {
+    if (this.checked) {
+      // Dark Mode ON
+      $('body').css('background-color', '#212121');
+      $('body').css('color', 'white');
+      $('#nav-mobile').css('background-color', '#000000');
+      $('#searchBarDiv input').removeClass('darkModeOFF');
+      $('#searchBarDiv input').addClass('darkModeON');
+      $('#searchBarDiv button i').removeClass('grey-darken-3-text');
+      $('#searchBarDiv button i').addClass('white-text');
+      $('#logo span').removeClass('black-text');
+      $('#logo span').addClass('white-text');
+      $('#nav-mobile li h5').removeClass('black-text');
+      $('#nav-mobile li h5').addClass('white-text');
+      $('#nav-mobile li h6').removeClass('black-text');
+      $('#nav-mobile li h6').addClass('white-text');
+      $('#nav-mobile li a').removeClass('black-text');
+      $('#nav-mobile li a').addClass('white-text');
+      $('.switch label').removeClass('black-text');
+      $('.switch label').addClass('white-text');
+      $('#navLinks li a').removeClass('black-text');
+      $('#navLinks li a').addClass('white-text');
+      $('.sidenav-trigger i').removeClass('black-text');
+      $('.sidenav-trigger i').addClass('white-text');
+      $('.card').removeClass('darkModeOFF');
+      $('.card').addClass('darkModeON');
+    } else {
+      // Dark Mode OFF
+      $('body').css('background-color', '#f5f5f5');
+      $('body').css('color', '#424242');
+      $('#nav-mobile').css('background-color', '#bbdefb');
+      $('#searchBarDiv input').removeClass('darkModeON');
+      $('#searchBarDiv input').addClass('darkModeOFF');
+      $('#searchBarDiv button i').removeClass('white-text');
+      $('#searchBarDiv button i').addClass('grey-darken-3-text');
+      $('#logo span').removeClass('white-text');
+      $('#logo span').addClass('black-text');
+      $('#nav-mobile li h5').removeClass('white-text');
+      $('#nav-mobile li h5').addClass('black-text');
+      $('#nav-mobile li h6').removeClass('white-text');
+      $('#nav-mobile li h6').addClass('black-text');
+      $('#nav-mobile li a').removeClass('white-text');
+      $('#nav-mobile li a').addClass('black-text');
+      $('.switch label').removeClass('white-text');
+      $('.switch label').addClass('black-text');
+      $('#navLinks li a').removeClass('white-text');
+      $('#navLinks li a').addClass('black-text');
+      $('.sidenav-trigger i').removeClass('white-text');
+      $('.sidenav-trigger i').addClass('black-text');
+      $('.card').removeClass('darkModeON');
+      $('.card').addClass('darkModeOFF');
+    }
+  });
 
-        } else {
-            // Dark Mode OFF
-            $("body").css("background-color", "#f5f5f5");
-            $("body").css("color", "#424242");
-            $("#nav-mobile").css("background-color", "#bbdefb");
-            $("#searchBarDiv input").removeClass("darkModeON");
-            $("#searchBarDiv input").addClass("darkModeOFF");
-            $("#searchBarDiv button i").removeClass("white-text");
-            $("#searchBarDiv button i").addClass("grey-darken-3-text");
-            $("#logo span").removeClass("white-text");
-            $("#logo span").addClass("black-text");
-            $("#nav-mobile li h5").removeClass("white-text");
-            $("#nav-mobile li h5").addClass("black-text");
-            $("#nav-mobile li h6").removeClass("white-text");
-            $("#nav-mobile li h6").addClass("black-text");
-            $("#nav-mobile li a").removeClass("white-text");
-            $("#nav-mobile li a").addClass("black-text");
-            $(".switch label").removeClass("white-text");
-            $(".switch label").addClass("black-text");
-            $("#navLinks li a").removeClass("white-text");
-            $("#navLinks li a").addClass("black-text");
-            $(".sidenav-trigger i").removeClass("white-text");
-            $(".sidenav-trigger i").addClass("black-text");
-            $(".card").removeClass("darkModeON");
-            $(".card").addClass("darkModeOFF");
-        }
-    });
+  // This file just does a GET request to figure out which user is logged in
+  // and updates the HTML on the page with the saved darkmode preferences
+  $.get('/api/user_data').then((data) => {
+    memberEL.textContent = data.email;
+    memberEL.setAttribute('data-userid', data.id);
+    // Check user mode preference of database
+    if (data.darkmode === true) {
+      darkModeNavbar.click();
+      darkModeSidebar.checked = data.darkmode;
+    }
+  });
 
-    // This file just does a GET request to figure out which user is logged in
-    // and updates the HTML on the page with the saved darkmode preferences
-    $.get("/api/user_data").then(function (data) {
-        memberEL.textContent = data.email;
-        memberEL.setAttribute("data-userid", data.id);
-        // Check user mode preference of database
-        if (data.darkmode === true) {
-            darkModeNavbar.click();
-            darkModeSidebar.checked = data.darkmode;
-        }
-    });
+  // Event Listening for Darkmode toggle
+  darkModeNavbar.addEventListener('click', () => {
+    const data = {
+      id: memberEL.getAttribute('data-userid'),
+      darkmode: darkModeNavbar.checked,
+    };
+    // Create PUT request to update Users table
+    fetch('/api/darkmode', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'Application/json',
+      },
+      body: JSON.stringify(data),
+    }).then(() => {
+      // eslint-disable-next-line no-console
+      console.log('Updating to the database');
+      // eslint-disable-next-line no-console
+    }).catch((err) => console.log(err));
+  });
 
-    // Event Listening for Darkmode toggle 
-    darkModeNavbar.addEventListener("click", () => {
-        const data = {
-            id: memberEL.getAttribute("data-userid"),
-            darkmode: darkModeNavbar.checked
-        }
-        // Create PUT request to update Users table
-        fetch('/api/darkmode', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'Application/json'
-            },
-            body: JSON.stringify(data)
-        }).then(() => {
-            console.log('Updating to the database');
-        }).catch(err => console.log(err));
-    });
+  // Event Listening Darkmode toggle for Mobile
+  darkModeSidebar.addEventListener('click', () => {
+    const data = {
+      id: memberEL.getAttribute('data-userid'),
+      darkmode: darkModeSidebar.checked,
+    };
+    // Create PUT request to update Users table
+    fetch('/api/darkmode', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'Application/json',
+      },
+      body: JSON.stringify(data),
+    }).then(() => {
+      // eslint-disable-next-line no-console
+      console.log('Updating to the database');
+      // eslint-disable-next-line no-console
+    }).catch((err) => console.log(err));
+  });
 
-    // Event Listening Darkmode toggle for Mobile
-    darkModeSidebar.addEventListener("click", () => {
-        const data = {
-            id: memberEL.getAttribute("data-userid"),
-            darkmode: darkModeSidebar.checked
-        }
-        // Create PUT request to update Users table
-        fetch('/api/darkmode', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'Application/json'
-            },
-            body: JSON.stringify(data)
-        }).then(() => {
-            console.log('Updating to the database');
-        }).catch(err => console.log(err));
-    })
-
-    // Fetch Videos when using searchbar.
-    const createForm = document.querySelector('#search-form');
-    createForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+  // Fetch Videos when using searchbar.
+  const createForm = document.querySelector('#search-form');
+  createForm.addEventListener('submit', (e) => {
+    e.preventDefault();
 
     // Grabs the value of the textarea that goes by the name, "quote"
     const newSearch = {
