@@ -23,10 +23,12 @@ This application is designed to take in an entered query in the search bar. It h
 
 ### Screenshots
 ![Screenshot of Youtwitch Login Page.](/public/images/youtwitchlogin.png "Screenshot of Youtwitch Login Page")
+
 ![Screenshot of Youtwitch Members Page.](/public/images/youtwitchhomepage.png "Screenshot of Youtwitch Members Page")
 
 ## URL
 The live project can be viewed here: 
+[Deployed Site](https://enigmatic-stream-39845.herokuapp.com/)
 
 
 ## Authors

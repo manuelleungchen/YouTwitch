@@ -1,12 +1,12 @@
 // When page is loaded
-$(document).ready(function () {
-    // Getting checkbox tooglers and member name div
-    const darkModeNavbar = document.querySelector("#navToogle");
-    const darkModeSidebar = document.querySelector("#sidebarToggle");
-    const memberEL = document.querySelector(".member-name");
+$(document).ready(() => {
+  // Getting checkbox tooglers and member name div
+  const darkModeNavbar = document.querySelector('#navToogle');
+  const darkModeSidebar = document.querySelector('#sidebarToggle');
+  const memberEL = document.querySelector('.member-name');
 
-    // Toggle the side navbar
-    $(".sidenav").sidenav();
+  // Toggle the side navbar
+  $('.sidenav').sidenav();
 
      // Save darkmode settings to DB
      const darkmodeSave = function () {
@@ -103,10 +103,10 @@ $(document).ready(function () {
      // Event Listening Darkmode toggle for Mobile
      darkModeSidebar.addEventListener("click", darkmodeSave);
 
-    // Fetch Videos when using searchbar.
-    const createForm = document.querySelector('#search-form');
-    createForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+  // Fetch Videos when using searchbar.
+  const createForm = document.querySelector('#search-form');
+  createForm.addEventListener('submit', (e) => {
+    e.preventDefault();
 
         // Grabs the value of the textarea that goes by the name, "quote"
         const newSearch = {
