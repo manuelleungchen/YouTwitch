@@ -61,11 +61,10 @@ img {
 }
 
 /* Trim the video title size to fit Video div */
-.cardtext{
-    white-space: nowrap; 
-    overflow: hidden;
-    text-overflow: ellipsis; 
-}
+    /* .cardtext{
+        white-space: nowrap; 
+        overflow: hidden; 
+    } */
 
 /*Footer style */
 footer {
