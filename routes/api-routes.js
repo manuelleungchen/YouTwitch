@@ -94,4 +94,15 @@ module.exports = (app) => {
       },
     );
   });
+
+  // Delete route for favorites
+  app.delete('/api/saved/:src', ({ params }, res) => {
+    let decoded = decodeURIComponent(params.src);
+    db.saved.destroy({
+      where: {
+        thumbnail: decoded,
+      },
+    })
+      .then((result) => res.json(result));
+  });
 };
